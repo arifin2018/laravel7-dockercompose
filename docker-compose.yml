@@ -1,11 +1,11 @@
 version: "3.7"
 services:
-  # frontend:
-  #   image: antoniopapa1991/admin-frontend
-  #   depends_on:
-  #     - backend
-  #   networks:
-  #     - app
+  frontend:
+    image: antoniopapa1991/admin-frontend
+    depends_on:
+      - backend
+    networks:
+      - app
 
   backend:
     container_name: admin-backend
