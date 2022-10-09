@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Facade\FlareClient\Http\Response;
 use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\ImageController;
+use App\Http\Requests\Product\Create;
 use Illuminate\Http\Response as HttpResponse;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
@@ -27,18 +29,13 @@ class ProductController extends Controller
         return response(new ProductResource($product), HttpFoundationResponse::HTTP_ACCEPTED);
     }
 
-    public function store(Request $request)
+    public function store(Create $request)
     {
-        $time = time(); // current Unix timestamp
-        // $dt = new DateTime("@$time");
-        // return $dt->format('Y-m-d H:i:s');
-        $file = $request->image;
-        $AddedName =  $time . '-' . $file->getClientOriginalName();
-        $image = Storage::putFileAs('images', $file, $AddedName);
+        $image = ImageController::upload($request->image);
         $product = Product::create([
             'title' => $request->title,
-            'description'   => $request->description,
-            'image' =>  env('APP_URL') . '/' . $image,
+            'description' => $request->description,
+            'image' =>  $image['image'],
             'price' => $request->price
         ]);
 
