@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\User\UserRequest;
 use App\Http\Requests\user\UserUpdateRequest;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,7 +20,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::with('role')->paginate(5);
+        $user = User::paginate();
+        return response(UserResource::collection($user), 200);
     }
 
     /**
@@ -33,7 +35,7 @@ class UserController extends Controller
         $request['password'] = Hash::make($request->password);
         $user = User::create($request->all());
 
-        return response($user, Response::HTTP_CREATED);
+        return response(new UserResource($user), Response::HTTP_CREATED);
     }
 
     /**
@@ -42,10 +44,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        $user = User::with('role')->find($id);
-        return response($user, 200);
+        $user = User::find($id);
+        return response(new UserResource($user), 200);
+
+        // $user = User::with('role')->find($id);
+        // return response($user, 200);
     }
 
     /**
@@ -60,7 +65,7 @@ class UserController extends Controller
         $user = User::find($id);
         $request['password'] = Hash::make($request->password);
         $user->update($request->all());
-        return response($user, 202);
+        return response(new UserResource($user), 202);
     }
 
     /**
@@ -77,13 +82,13 @@ class UserController extends Controller
 
     public function profile()
     {
-        return response(Auth::user(), Response::HTTP_ACCEPTED);
+        return response(new UserResource(Auth::user()), Response::HTTP_ACCEPTED);
     }
 
     public function updateProfile(UserUpdateRequest $request)
     {
         $user = Auth::user();
         $user->update($request->all());
-        return response($user, Response::HTTP_ACCEPTED);
+        return response(new UserResource($user), Response::HTTP_ACCEPTED);
     }
 }
