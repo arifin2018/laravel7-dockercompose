@@ -10,13 +10,18 @@ class Order extends Model
 
     public function orderItems()
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->hasMany(OrderItem::class, 'order_id', 'id');
     }
 
     public function getTotalAttribute()
     {
-        return $this->orderItems->sum(function (OrderItem $item) {
-            return $item->price * $item->quantity;
+        return $this->orderItems->sum(function (OrderItem $order) {
+            return $order->price * $order->quantity;
         });
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 }

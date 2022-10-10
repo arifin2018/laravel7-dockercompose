@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RoleResource;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
@@ -15,7 +16,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return Role::all();
+        $role = Role::all();
+        return RoleResource::collection($role);
     }
 
     /**
@@ -30,7 +32,7 @@ class RoleController extends Controller
             'name' => $request->name
         ]);
 
-        return response($role, HttpResponse::HTTP_CREATED);
+        return response(new RoleResource($role), HttpResponse::HTTP_CREATED);
     }
 
     /**
@@ -41,7 +43,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        return Role::find($id);
+        return new RoleResource(Role::find($id));
     }
 
     /**
@@ -59,7 +61,7 @@ class RoleController extends Controller
             'name' => $request->name
         ]);
 
-        return response($role, HttpResponse::HTTP_ACCEPTED);
+        return response(new RoleResource($role), HttpResponse::HTTP_ACCEPTED);
     }
 
     /**

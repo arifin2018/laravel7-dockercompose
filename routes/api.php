@@ -36,4 +36,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('role', 'RoleController');
     Route::apiResource('product', 'ProductController');
     Route::apiResource('order', 'OrderController')->only('index', 'show');
+    Route::get('exportCSV', 'OrderController@exportCSV');
 });
