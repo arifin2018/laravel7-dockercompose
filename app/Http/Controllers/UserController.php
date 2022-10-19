@@ -82,7 +82,10 @@ class UserController extends Controller
 
     public function profile()
     {
-        return response(new UserResource(Auth::user()), Response::HTTP_ACCEPTED);
+        $data = Auth::user();
+        return (new UserResource($data))->additional([
+            'permission' => $data->permissions()
+        ]);
     }
 
     public function updateProfile(UserUpdateRequest $request)

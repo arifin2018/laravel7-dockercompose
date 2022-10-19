@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\RoleResource;
 use App\Role;
+use App\RolePermission;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
 
@@ -31,6 +32,15 @@ class RoleController extends Controller
         $role =  Role::create([
             'name' => $request->name
         ]);
+
+        if ($permissions = $request->permissions) {
+            foreach ($permissions as $value) {
+                RolePermission::create([
+                    'role_id'   => $role->id,
+                    'permission_id' => $value
+                ]);
+            }
+        }
 
         return response(new RoleResource($role), HttpResponse::HTTP_CREATED);
     }
@@ -61,6 +71,17 @@ class RoleController extends Controller
             'name' => $request->name
         ]);
 
+        RolePermission::where('role_id', $role->id)->delete();
+
+        if ($permissions = $request->permissions) {
+            foreach ($permissions as $value) {
+                RolePermission::create([
+                    'role_id'   => $role->id,
+                    'permission_id' => $value
+                ]);
+            }
+        }
+
         return response(new RoleResource($role), HttpResponse::HTTP_ACCEPTED);
     }
 
@@ -72,6 +93,7 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        RolePermission::where('role_id', $id)->delete();
         Role::destroy($id);
         return response(null, HttpResponse::HTTP_NO_CONTENT);
     }
