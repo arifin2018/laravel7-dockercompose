@@ -32,9 +32,13 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('profile', 'UserController@profile');
     Route::put('profile', 'UserController@updateProfile');
     Route::put('update-password', 'UserController@updatePassword');
+    Route::post('upload', 'ImageController@upload');
+    Route::get('exportCSV', 'OrderController@exportCSV');
+
+
     Route::apiResource('user', 'UserController');
     Route::apiResource('role', 'RoleController');
     Route::apiResource('product', 'ProductController');
     Route::apiResource('order', 'OrderController')->only('index', 'show');
-    Route::get('exportCSV', 'OrderController@exportCSV');
+    Route::apiResource('permissions', 'PermissionController')->only('index');
 });
