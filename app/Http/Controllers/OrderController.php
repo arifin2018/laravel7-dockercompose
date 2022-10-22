@@ -2,26 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\OrderResource;
 use App\Order;
 use App\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
 {
     public function index()
     {
+        Gate::authorize('view', ['orders']);
         $order = Order::with(['orderItems'])->paginate();
         return OrderResource::collection($order);
     }
 
     public function show($id)
     {
+        Gate::authorize('view', ['orders']);
         return new OrderResource(Order::find($id));
     }
 
     public function exportCSV()
     {
+        Gate::authorize('view', ['orders']);
         $fileName = time() . ' - tasks.csv';
 
         $orders = OrderResource::collection(Order::all());
