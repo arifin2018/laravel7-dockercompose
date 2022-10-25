@@ -31,13 +31,11 @@ services:
       dockerfile: dockerfile
     environment:
       DB_HOST: db
-      DB_DATABASE: laravel-admin
+      DB_DATABASE: laravel_admin
       DB_USERNAME: root
-      DB_PASSWORD: admin
+      DB_PASSWORD: root
     ports:
-      - ":9000"
-    env_file: .env
-    tty: true
+      - "9000:9000"
     volumes:
       - .:/var/www/html/backend
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
@@ -45,6 +43,8 @@ services:
       - db
     networks:
       - app
+    links:
+      - db
 
   db:
     container_name: admin_db
