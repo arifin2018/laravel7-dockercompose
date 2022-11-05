@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\User\UserLogin;
 use Facade\FlareClient\Http\Response;
+use Illuminate\Support\Facades\Cookie;
 use App\Http\Requests\User\UserRequest;
 use Illuminate\Http\Response as HttpResponse;
 
@@ -26,9 +27,10 @@ class AuthController extends Controller
         }
         $user = Auth::user();
         $token = $user->createToken('admin')->accessToken;
+        $cookie = cookie('jwt', $token, 36000);
         return response([
             'access_token'  =>  $token
-        ], HttpResponse::HTTP_ACCEPTED);
+        ], HttpResponse::HTTP_ACCEPTED)->withCookie($cookie);
     }
 
     public function register(UserRequest $request)
@@ -37,5 +39,13 @@ class AuthController extends Controller
         $user = User::create($request->all());
 
         return response($user, HttpResponse::HTTP_CREATED);
+    }
+
+    public function logout()
+    {
+        $cookie = Cookie::forget('jwt');
+        return response([
+            'message'   => 'Success'
+        ])->withCookie($cookie);
     }
 }

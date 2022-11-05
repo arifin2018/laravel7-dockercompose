@@ -34,6 +34,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put('update-password', 'UserController@updatePassword');
     Route::post('upload', 'ImageController@upload');
     Route::get('exportCSV', 'OrderController@exportCSV');
+    Route::get('Chart', 'DashboardController@Chart');
+    Route::post('logout', 'AuthController@logout');
 
 
     Route::apiResource('user', 'UserController');
