@@ -24,4 +24,4 @@
 
 ## if you want connect to dbeaver
 
-<p align="center"><img src="https://drive.google.com/file/d/1gwolBbkzE934CRFNHkw0zS0btAgZMl5S/view?usp=share_link" width="400"></p>
+<p align="center"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgyasqdwA25XWQDnWKmeQ5fM3ihd5H5CrovcQYA8Ism8NM3KWGMPYmTqSOFjPr8fc7z82BLf-SIeC5nwTFJdHEoVn3Ouu6VtnzF44esIdA2omIRh4xfF3u8mqtdbunwFHiM1m45ljaZIpqW6Sz4s2BZV8nudaNEwBy8mE8mScpWtUY8hFQOmQPQTWPeOQ/w653-h572/Screen%20Shot%202022-11-06%20at%2001.02.24.png" width="400"></p>
