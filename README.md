@@ -11,12 +11,17 @@
 1. docker-compose up -d --build
 2. docker exec -it backend bash
 3. cp .env.example .env
-4. php artisan migrate
-5. php artisan db:seed
-6. php artisan db:seed --class=PermissionSeeder
-7. php artisan db:seed --class=RolePermissionSeeder
-8. php artisan passport:install
+4. composer install
+5. php artisan migrate
+6. php artisan db:seed
+7. php artisan db:seed --class=PermissionSeeder
+8. php artisan db:seed --class=RolePermissionSeeder
+9. php artisan passport:install
 
 # test and running Postman
 
 -   http://backend.test:8080
+
+## if you want connect to dbeaver
+
+<p align="center"><img src="https://drive.google.com/file/d/1gwolBbkzE934CRFNHkw0zS0btAgZMl5S/view?usp=share_link" width="400"></p>
