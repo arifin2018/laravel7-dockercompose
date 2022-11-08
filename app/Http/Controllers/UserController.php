@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         Gate::authorize('view', ['users']);
         $user = User::paginate();
-        return response(UserResource::collection($user), 200);
+        return UserResource::collection($user);
     }
 
     /**
@@ -82,8 +82,12 @@ class UserController extends Controller
     public function destroy($id)
     {
         Gate::authorize('edit', ['users']);
-        User::destroy($id);
-        return response(null, Response::HTTP_NO_CONTENT);
+        if (User::find($id) == null) {
+            return response('failed delete user', Response::HTTP_BAD_REQUEST);
+        } else {
+            User::destroy($id);
+            return response(null, Response::HTTP_NO_CONTENT);
+        }
     }
 
     public function profile()
