@@ -13,6 +13,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        factory(User::class, 30)->create();
+        /*
         $data = [
             [
                 'nur',
@@ -53,5 +55,6 @@ class UserSeeder extends Seeder
             unset($resultData[$i]);
             $i++;
         }
+        */
     }
 }
